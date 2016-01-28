@@ -1,0 +1,18 @@
+language: bash
+
+services:
+  - docker
+
+before_script:
+  - export REPO=dockervan/boulder
+#  - docker pull $REPO || true
+
+script:
+  - cd $VERSION
+  - docker build --pull -t boulder $VARIANT
+
+after_success:
+  - docker tag boulder $REPO
+  - docker images
+#  - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+#  - if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then docker push $REPO; fi
